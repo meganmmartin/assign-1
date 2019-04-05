@@ -1,0 +1,209 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Assignment1
+//<summary>
+//This application has been designed to convert a specified value from one currency to another.
+//Display includes currency output, date, time, user's name and photo.
+//
+//Written by Megan Martin 19039931
+//Date: 5 April, 2019
+//</summary>
+{
+    public partial class Form1 : Form
+    {
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+
+
+        //Click to submit all entered data and display conversion, name and time as text
+        private void buttonSubmit_Click(object sender, EventArgs e) : base(amount, fromCurrency, toCurrency)
+        {
+            labelNameIs.Text = "Hello " + textBoxName.Text;
+            
+            decimal toCurrency = FindToCurrency();
+            decimal fromCurrency = FindFromCurrency();
+            decimal amount = UserMoney();
+            decimal result = ConvertMoney(amount, fromCurrency, toCurrency);
+            
+            labelFinalOutput.Text = "Your " + Convert.ToString(numericUpDownEntry.Value) + " " +
+            GetSelectedFromCurrencyName() + " converts to " + ConvertMoney() + GetSelectedToCurrencyName() + " on "
+            + DateTime.Now.ToLongDateString() + " at " + DateTime.Now.ToLongTimeString();
+        }
+
+        //Retreive the currency type we are converting from as a string.
+        private String GetSelectedFromCurrencyName()
+        {
+            foreach (Control c in groupBoxConvertFrom.Controls)
+            {
+                if (c is RadioButton && ((RadioButton)c).Checked == true)
+                {
+                    return c.Text;
+                }
+            }
+            return "";
+        }
+
+        //Retreive the currency type we are converting to as a string.
+
+        private String GetSelectedToCurrencyName()
+        {
+            foreach (Control c in groupBoxConvertTo.Controls)
+            {
+                if (c is RadioButton && ((RadioButton)c).Checked == true)
+                {
+                    return c.Text;
+                }
+            }
+            return "";
+        }
+
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+        }
+
+        //Time and Date at top of screen
+        private void timerDate_Tick(object sender, EventArgs e)
+        {
+            timerDate.Interval = 1000;
+            labelDate.Text = DateTime.Now.ToLongDateString() + "  " + DateTime.Now.ToLongTimeString();
+        }
+        //Show or hide photo
+        private void checkBoxPhoto_Click(object sender, EventArgs e)
+        {
+            if (checkBoxPhoto.Checked)
+            {
+                pictureBoxPhoto.Visible = true;
+            }
+            else
+            {
+                pictureBoxPhoto.Visible = false;
+            }
+        }
+
+        //List of conversion quantities to convert from.
+        decimal FindFromCurrency()
+        {
+            if (radioButtonFromAUD.Checked)
+            {
+                return 0.93m;
+            }
+            else if (radioButtonFromNZD.Checked)
+            {
+                return 1m;
+            }
+            else if (radioButtonFromCAD.Checked)
+            {
+                return 0.94m;
+            }
+            else if (radioButtonFromEUR.Checked)
+            {
+                return 0.59m;
+            }
+            else if (radioButtonFromAED.Checked)
+            {
+                return 2.69m;
+            }
+            else if (radioButtonFromINR.Checked)
+            {
+                return 47.51m;
+            }
+            else if (radioButtonFromRMB.Checked)
+            {
+                return 4.63m;
+            }
+            else if (radioButtonFromYEN.Checked)
+            {
+                return 77.98m;
+            }
+            else
+            {
+                return 0.73m;
+            }
+
+        }
+
+        //List of conversion quantities to convert to.
+        decimal FindToCurrency()
+        {
+            if (radioButtonToAUD.Checked)
+            {
+                return 0.93m;
+            }
+            else if (radioButtonToNZD.Checked)
+            {
+                return 1m;
+            }
+            else if (radioButtonToCAD.Checked)
+            {
+                return 0.94m;
+            }
+            else if (radioButtonToEUR.Checked)
+            {
+                return 0.59m;
+            }
+            else if (radioButtonToAED.Checked)
+            {
+                return 2.69m;
+            }
+            else if (radioButtonToINR.Checked)
+            {
+                return 47.51m;
+            }
+            else if (radioButtonToRMB.Checked)
+            {
+                return 4.63m;
+            }
+            else if (radioButtonToYEN.Checked)
+            {
+                return 77.98m;
+            }
+            else
+            {
+                return 0.73m;
+            }
+
+        }
+
+        //Numeric entry value.
+        public void numericUpDownEntry_ValueChanged(object sender, EventArgs e)
+        {
+        }
+
+        decimal UserMoney()
+        {
+            return numericUpDownEntry.Value;
+        }
+
+        /*ConvertMoney Function
+         Method description: Provide a calculation output for currencies entered through radioButtons.
+         Method is utilised when the submit button is pressed by user. If there is no currency conversion necessary then original amount is used as output
+         Parameters used: a decimal value of amount entered, one string for the currency we are converting from and one for the currency we are converting to.
+         Return Type: decimal
+        */
+
+        private static decimal ConvertMoney(decimal amount, decimal fromCurrency, decimal toCurrency)
+        {
+                decimal result = Math.Round(amount * toCurrency / fromCurrency, 2);
+                return result;
+            
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
